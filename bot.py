@@ -1,8 +1,10 @@
 import praw
 import requests
 import re
+
 from pythorhead import Lemmy
 from . import credentials
+from time import sleep
 
 # Create a Reddit instance
 def get_reddit():
@@ -63,3 +65,4 @@ if __name__ == '__main__':
         
         print("Uploading to lemmy...")
         lemmy.post.create( community_id=community_id, name=title, url=media_url, body=media_content )
+        sleep(10) # flooding is bad and likely to get you banned
