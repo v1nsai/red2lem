@@ -1,7 +1,9 @@
 # Reddit to Lemmy Crosspost Bot
-Some of the post popular content on reddit is crossposts from bots that follow Twitter, Facebook, TikTok etc.  This is a way to build some foundation for new communities to grow on.
+This is a very basic crossposting bot that follows a Reddit sub and posts media and links to a Lemmy community. 
 
-Please be sure using a bot to post content isn't against your community or instance rules before you unleash it.  The default waits 10 seconds, otherwise it posts pretty quickly and is likely to get banned pretty quickly.
+I remember seeing a lot of the same content on both Digg and Reddit before I stopped going to Digg entirely. This bot helps close the "content gap" between old Reddit communities and new Lemmy ones. 
+
+Please be sure using a bot to post content isn't against your community or instance rules before you start letting it post.  Might be best to start your own community. The default waits 10 seconds, otherwise it posts pretty quickly and is likely to get banned pretty quickly.
 
 # Usage
 * `git clone https://github.com/v1nsai/red2lem.git`
@@ -15,4 +17,4 @@ Please be sure using a bot to post content isn't against your community or insta
 * `python bot.py`
 
 # TODO
-* Add support for anonymous scraping using JSON (you can do this by appending `.json` to pretty much any Reddit URL).  I like the handy streaming service that the Reddit API exposes but since basically all goodwill is gone between devs and Reddit I'm expecting to get shut down at some point.
+* Add support for anonymous scraping using JSON (you can do this by appending `.json` to pretty much any Reddit URL).
