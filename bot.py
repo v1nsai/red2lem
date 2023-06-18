@@ -4,6 +4,7 @@ import re
 
 from pythorhead import Lemmy
 from . import credentials
+from . import vars
 from time import sleep
 
 # Create a Reddit instance
@@ -11,7 +12,7 @@ def get_reddit():
     return praw.Reddit(
         client_id=credentials.reddit_client_id,
         client_secret=credentials.reddit_client_secret,
-        user_agent='bot that alerts on new subreddit posts v1.0 by u/RedPillOrRedKoolAid_',
+        user_agent=vars.user_agent,
     )
 
 def get_lemmy():
@@ -25,11 +26,11 @@ if __name__ == '__main__':
 
     # Get the subreddit object
     reddit = get_reddit()
-    subreddit = reddit.subreddit('NoStupidQuestions')
+    subreddit = reddit.subreddit(subreddit_name)
 
     # Get the lemmy object
     lemmy = get_lemmy()
-    community_id = lemmy.discover_community("testsubforbots@lemmy.world")
+    community_id = lemmy.discover_community(vars.community_name)
     
     # Watch subreddit for new posts
     for submission in subreddit.stream.submissions():

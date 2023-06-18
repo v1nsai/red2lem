@@ -1,0 +1,4 @@
+pythorhead
+loguru
+praw
+virtualenv
