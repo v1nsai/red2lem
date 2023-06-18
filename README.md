@@ -1,7 +1,7 @@
 # Reddit to Lemmy Crosspost Bot
 This is a very basic crossposting bot that follows a Reddit sub and posts media and links to a Lemmy community. 
 
-I remember seeing a lot of the same content on both Digg and Reddit before I stopped going to Digg entirely. This bot helps close the "content gap" between old Reddit communities and new Lemmy ones. 
+There was a lot of the same content being posted to both Digg and Reddit for a while as communities migrated. This bot helps close the "content gap" between old Reddit communities and new Lemmy ones. 
 
 Please be sure using a bot to post content isn't against your community or instance rules before you start letting it post.  Might be best to start your own community. The default waits 10 seconds, otherwise it posts pretty quickly and is likely to get banned pretty quickly.
 
