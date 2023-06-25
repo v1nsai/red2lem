@@ -3,9 +3,9 @@ import requests
 import re
 
 from pythorhead import Lemmy
-from . import credentials
-from . import vars
-from time import sleep
+import credentials
+import vars
+import time
 
 copy_automoderator_posts = False
 
@@ -30,7 +30,7 @@ if __name__ == '__main__':
 
     # Get the subreddit object
     reddit = get_reddit()
-    subreddit = reddit.subreddit(subreddit_name)
+    subreddit = reddit.subreddit(vars.subreddit_name)
 
     # Get the lemmy object
     lemmy = get_lemmy()
@@ -38,6 +38,7 @@ if __name__ == '__main__':
 
     # Watch subreddit for new posts
     for submission in subreddit.stream.submissions():
+        time.sleep(60)
         print(f"New post found: {submission.title} ({submission.url})")
 
         author_name = submission.author.name
@@ -46,7 +47,7 @@ if __name__ == '__main__':
             print("Not copying automoderator content")
             continue
 
-        title = f"[reddit user {author_name}] - {submission.title}"
+        title = f"[X-Posted from Reddit - /u/{author_name}] - {submission.title}"
         if submission.is_video:
             print("Saving video...")
             media_url = submission.media['reddit_video']['fallback_url']
@@ -73,4 +74,3 @@ if __name__ == '__main__':
 
         print("Uploading to lemmy...")
         lemmy.post.create(community_id=community_id, name=title, url=media_url, body=media_content)
-        sleep(10)  # flooding is bad and likely to get you banned
