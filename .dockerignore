@@ -1,0 +1,8 @@
+*.md
+.dockerignore
+.git
+.gitignore
+__pycache__
+Dockerfile
+LICENSE
+venv
