@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  red2lem:
+    build: https://github.com/v1nsai/red2lem.git
+    container_name: red2lem
+    environment:
+      - reddit_client_id=YOUR_REDDIT_CLIENT_ID
+      - reddit_client_secret=YOUR_REDDIT_CLIENT_SECRET
+      - lemmy_url=YOUR_LEMMY_INSTANCE_URL
+      - lemmy_username=YOUR_LEMMY_USERNAME
+      - lemmy_password=YOUR_LEMMY_PASSWORD
+      - subreddit_name=TARGET_SUBREDDIT
+      - community_name=TARGET_LEMMY_COMMUNITY
+      - imgur_client_id=YOUR_IMGUR_CLIENT_ID
+      - copy_automoderator_posts=OPTIONAL_TRUE_OR_FALSE
+    restart: unless-stopped

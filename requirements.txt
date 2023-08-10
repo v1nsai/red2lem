@@ -1,4 +1,6 @@
-pythorhead
-loguru
+imgurpython
 praw
+python-dotenv
+pythorhead
 virtualenv
+requests
