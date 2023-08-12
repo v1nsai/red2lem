@@ -10,18 +10,22 @@ Please be sure using a bot to post content isn't against your community or insta
 
 ## Features
 
-- **Monitors a Subreddit**: The script continuously watches a specified subreddit for new posts and actions them as they are detected.
-- **Cross-Posts to Lemmy**: New Reddit posts are automatically cross-posted to a designated Lemmy community with proper attribution to the original author.
-- **Handles Various Content Types**: Whether it's text, images, videos, or links, the script can process different types of content and post them appropriately on Lemmy.
-- **Imgur Re-Upload Support**: Optionally, images and videos can be re-uploaded to Imgur, providing a fresh link for the Lemmy post. If no Imgur API client ID is provided, the original Reddit media URLs are used.
-- **AutoModerator Handling**: You can choose whether to include or exclude posts by Reddit's AutoModerator, depending on your preferences.
-- **Docker-Friendly**: Designed with Docker support in mind, the script can be easily containerized and run within a Docker environment.
+- **🔍 Monitors a Subreddit**: The script continuously watches a specified subreddit for new posts and actions them as they are detected.
+- **♾ Cross-Posts to Lemmy**: New Reddit posts are automatically cross-posted to a designated Lemmy community with proper attribution to the original author.
+- **💾 Handles Various Content Types**: Whether it's text, images, videos, or links, the script can process different types of content and post them appropriately on Lemmy.
+- **📸 Imgur Re-Upload Support**: Optionally, images and videos can be re-uploaded to Imgur, providing a fresh link for the Lemmy post. If no Imgur API client ID is provided, the original Reddit media URLs are used.
+- **✅ AutoModerator Handling**: You can choose whether to include or exclude posts by Reddit's AutoModerator, depending on your preferences.
+- **⏱ Customizable Check Interval**: The interval at which the script checks for new Reddit posts can be customized using an environment variable, allowing users to set their preferred frequency.
+- **🔗 Original Post Linking**: In the Lemmy post, a link to the original Reddit post is included, preserving the connection to the source material.
+- **⛔️ Error Handling and Fallbacks**: The script includes mechanisms to handle unexpected issues, such as fallback to JSON when API calls fail.
+- **🐋 Docker-Friendly**: Designed with Docker support in mind, the script can be easily containerized and run within a Docker environment.
 
 
 ## Installation and Usage Guide
 
 ### Prerequisites
-- Python 3.x
+- Python 3.10 (or newer)
+- Or Docker
 
 ### Installation (non Docker)
 0. Clone the repo
@@ -83,18 +87,22 @@ docker build -t red2lem .
 version: "3.9"
 services:
   red2lem:
-    build: https://github.com/vp-en/red2lem.git
+    build: https://github.com/v1nsai/red2lem.git
     container_name: red2lem
     environment:
-      - reddit_client_id=YOUR_REDDIT_CLIENT_ID
-      - reddit_client_secret=YOUR_REDDIT_CLIENT_SECRET
-      - lemmy_url=YOUR_LEMMY_URL
-      - lemmy_username=YOUR_LEMMY_USERNAME
-      - lemmy_password=YOUR_LEMMY_PASSWORD
-      - subreddit_name=NoStupidQuestions
-      - community_name=bot_testing@lemm.ee
-      - imgur_client_id=YOUR_OPTIONAL_IMGUR_CLIENT_ID
-      - copy_automoderator_posts=YOUR_OPTIONAL_FLAG
+      reddit_client_id: YOUR_REDDIT_CLIENT_ID
+      reddit_client_secret: YOUR_REDDIT_CLIENT_SECRET
+      reddit_user_agent: YOUR_REDDIT_USER_AGENT
+      lemmy_url: YOUR_LEMMY_URL
+      lemmy_username: YOUR_LEMMY_USERNAME
+      lemmy_password: YOUR_LEMMY_PASSWORD
+      subreddit_name: YOUR_SUBREDDIT_NAME
+      community_name: YOUR_COMMUNITY_NAME
+      imgur_client_id: YOUR_IMGUR_CLIENT_ID # Optional
+      imgur_client_secret: YOUR_IMGUR_CLIENT_SECRET # Optional
+      copy_automoderator_posts: false # Optional, default is False
+      post_check_interval: 60 # Optional, default is 60
+      title_template: "[X-Posted from Reddit - /u/{author_name}] - {submission_title}" # Optional
     restart: unless-stopped
 ```
 
@@ -131,3 +139,4 @@ You need to set the following environment variables before running the script:
 
 `imgur_secret_id`: (Optional) Your Imgur API secret ID, used to re-upload images and videos to Imgur. If not set, the original Reddit media URLs will be used.
 
+`title_template`: (Optional): A template string used to format the title of the Lemmy posts. It can contain the placeholders {author_name} and {submission_title} for author's Reddit username and submission title, respectively. The default is "[X-Posted from Reddit - /u/{author_name}] - {submission_title}".

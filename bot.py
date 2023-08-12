@@ -30,8 +30,19 @@ def get_lemmy():
 def upload_to_imgur(media_url):
     imgur_client_id = os.environ.get("imgur_client_id")
     imgur_client_secret = os.environ.get("imgur_client_secret")
-    client = ImgurClient(client_id=imgur_client_id, client_secret=imgur_client_secret)
-    return client.upload_from_url(media_url, config=None, anon=True)["link"]
+
+    if not imgur_client_id or not imgur_client_secret:
+        print("Imgur client ID or secret is missing, using original Reddit link.")
+        return media_url
+
+    try:
+        client = ImgurClient(
+            client_id=imgur_client_id, client_secret=imgur_client_secret
+        )
+        return client.upload_from_url(media_url, config=None, anon=True)["link"]
+    except Exception as e:
+        print(f"Failed to upload to Imgur: {e}, using original Reddit link.")
+        return media_url
 
 
 # Function to get a Reddit submission object from a submission ID
@@ -89,13 +100,18 @@ def main():
             media_url = submission.url
 
         # Construct the link to the original Reddit post
-        original_post_link = (
-            f"**Original Post**: [link to OP](https://np.reddit.com{submission.permalink})"
+        original_post_link = f"**Original Post**: [link to OP](https://np.reddit.com{submission.permalink})"
+
+        # Customize the title using an environment variable or keep the default
+        title_template = os.environ.get(
+            "title_template",
+            "[X-Posted from Reddit - /u/{author_name}] - {submission_title}",
+        )
+        title = title_template.format(
+            author_name=author_name, submission_title=submission.title
         )
 
-        # Create title and body for Lemmy post
-        title = f"[X-Posted from Reddit - /u/{author_name}] - {submission.title}"
-        body = f"{submission.selftext}\n\n{original_post_link}"
+        body = f"{submission.selftext}\n\n\n{original_post_link}"
 
         print("Uploading to lemmy...")
         lemmy_post = lemmy.post.create(
