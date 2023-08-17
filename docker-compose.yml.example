@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  red2lem:
+    build: https://github.com/v1nsai/red2lem.git
+    container_name: red2lem
+    environment:
+      reddit_client_id: YOUR_REDDIT_CLIENT_ID
+      reddit_client_secret: YOUR_REDDIT_CLIENT_SECRET
+      reddit_user_agent: YOUR_REDDIT_USER_AGENT
+      lemmy_url: YOUR_LEMMY_URL
+      lemmy_username: YOUR_LEMMY_USERNAME
+      lemmy_password: YOUR_LEMMY_PASSWORD
+      subreddit_name: YOUR_SUBREDDIT_NAME
+      community_name: YOUR_COMMUNITY_NAME
+      imgur_client_id: YOUR_IMGUR_CLIENT_ID # Optional
+      imgur_client_secret: YOUR_IMGUR_CLIENT_SECRET # Optional
+      copy_automoderator_posts: false # Optional, default is False
+      post_check_interval: 60 # Optional, default is 60
+      title_template: "[X-Posted from Reddit - /u/{author_name}] - {submission_title}" # Optional
+    restart: unless-stopped
+
